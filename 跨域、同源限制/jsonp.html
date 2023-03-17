@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // jsonp的原理：利用了script标签的src属性不受浏览器的同源策略限制，来进行数据请求的。
+
+        // 1.原生实现
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        // 传参并指定回调执行函数为onBack
+        script.src = 'http://www.domin2.com:8080/login?user=admin&callback=onBack';
+        document.head.appendChild(script);
+        // 回调执行函数
+        function onBack(res) {
+            alert(JSON.stringify(res));
+        }
+
+        // 2.jquery ajax:
+        $ajax({
+            url: 'http://www.domain2.com:8080/login',
+            type: 'get',
+            dataType: 'jsonp', // 请求方式为jsonp
+            jsonCallback: "onBack", // 自定义回调函数名
+            data: {}
+        });
+
+        // 3.vue.js
+        this.$http.jsonp('http://www.domain2.com:8080/login', {
+            params: {},
+            jsonp: 'onBack'
+        }).then((res) => {
+            console.log(res);
+        })
+    </script>
+</body>
+
+</html>

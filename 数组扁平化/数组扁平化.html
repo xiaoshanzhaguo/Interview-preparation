@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const array = [1, [2, [3, [4, 5]]], 6]
+        // 1. 使用flat
+        function flatten1(arr) {
+            return arr.flat(Infinity);
+        }
+        console.log(flatten1(array));
+
+        // 2.1 使用toString+join+map
+        function flatten21(arr) {
+            return arr.toString().split(',').map(item => parseFloat(item));
+        }
+        console.log(flatten21(array));
+
+        // 2.2 使用toString+join+map
+        function flatten22(arr) {
+            return arr.join(',').split(',').map(item => parseFloat(item));
+        }
+        console.log(flatten22(array));
+
+        // 3. 使用正则替换
+        function flatten3(arr) {
+            let str = JSON.stringify(arr).replace(/(\[|\])/g, '');  // 将[]全局替换为空
+            str = '[' + str + ']';
+            arr = JSON.parse(str);
+            return arr;
+        }
+        console.log(flatten3(array));
+
+        // 4.1 循环+concat+push  注意这种只适合一层嵌套的情况
+        function flatten41(arr) {
+            let result = [];
+            for (let i = 0; i < arr.length; i++) {
+                result = result.concat(arr[i]);
+            }
+            return arr;
+        }
+        console.log(flatten41(array));
+
+        // 4.2 循环+concat+push  递归的情况
+        function flatten42(arr) {
+            let result = [];
+            for (let i = 0; i < arr.length; i++) {
+                if (Array.isArray(arr[i])) {
+                    result = result.concat(flatten42(arr[i]));  // 这里要继续递归进行扁平化
+                } else {
+                    result.push(arr[i]);
+                }
+            }
+            return result;  // 注意这里返回的是result
+        }
+        console.log(flatten42(array));
+
+        // 4.3 循环+concat+push  递归版本的反嵌套
+        function flatten43(arr) {
+            let result = [];
+            (function flat(array) {
+                array.forEach(function (el) {
+                    if (Array.isArray(el)) flat(el);
+                    else result.push(el);
+                });
+            })(array);  // 闭包 能够读取其他函数内部变量的函数
+            return result;  // 注意这里返回的是result
+        }
+        console.log(flatten43(array));
+
+
+        // 5. 手写flat （先跳过）
+        function flatten5(arr) {
+
+        }
+        console.log(flatten5(array));
+
+        // 6. reduce
+        function flatten6(arr) {
+            return arr.reduce((res, curr) => res.concat(Array.isArray(curr) ? flatten6(curr) : curr), []);
+        }
+        console.log(flatten6(array));
+
+        // 7. while + some
+        function flatten7(arr) {
+            while (arr.some(item => Array.isArray(item))) {
+                arr = [].concat(...arr);
+            }
+            return arr;
+        }
+        console.log(flatten7(array));
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function selectionSort(arr) {
+            let temp, min = 0;
+            for (let i = 0; i < arr.length - 1; i++) {
+                min = i;
+                for (let j = i + 1; j < arr.length - 1; j++) {
+                    if (arr[min] > arr[j]) {
+                        min = j;
+                    }
+                }
+                if (min != i) {
+                    let temp = arr[i];
+                    arr[i] = arr[min];
+                    arr[min] = temp;
+                }
+            }
+            return arr;
+        }
+        const arr = [98, 42, 25, 54, 15, 3, 25, 72, 41, 10, 121];
+        console.log(selectionSort(arr));
+    </script>
+</body>
+
+</html>

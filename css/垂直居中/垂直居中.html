@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .main {
+            height: 100px;
+            background-color: skyblue;
+        }
+
+        .main p {
+            line-height: 100px;
+            background-color: pink;
+        }
+
+        .main span {
+            vertical-align: middle;
+            /* 该元素的基线相对于该元素所在行的基线垂直对齐 */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <!-- 1. 单行文字垂直居中 -->
+        <!-- <p>单行文字</p> -->
+        <!-- 2.块元素内部存在 一个行内元素需要垂直居中时 -->
+        <span>行元素</span>
+    </div>
+</body>
+
+</html>
